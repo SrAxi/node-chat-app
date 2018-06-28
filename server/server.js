@@ -28,7 +28,7 @@ io.on('connection', (socket) => {
         socket.join(params.room);
         console.log(params.room, 'ROOM');
 
-        socket.emit(NEW_MESSAGE, generateMessage('Admin', 'Welcome to the Chat App'));
+        socket.emit(NEW_MESSAGE, generateMessage('Admin', `Welcome to the Chat App - you're in: '${params.room}' room`));
         socket.broadcast.to(params.room).emit(NEW_MESSAGE, generateMessage('Admin', `${params.username} has joined.`));
         callback();
     });
