@@ -7,7 +7,7 @@ describe('generateMessage', () => {
         const text = 'Dummy text';
         const generatedMsg = generateMessage(from, text);
 
-        expect(typeof generatedMsg.createdAt).toBe('number');
+        expect(typeof generatedMsg.createdAt).toBe('string');
         expect(generatedMsg).toMatchObject({ from, text });
     });
 });
@@ -20,7 +20,7 @@ describe('generateLocationMessage', () => {
         const url = 'https://www.google.com/maps?q=1,2';
         const generatedMsg = generateLocationMessage(from, latitude, longitude);
 
-        expect(typeof generatedMsg.createdAt).toBe('number');
+        expect(typeof generatedMsg.createdAt).toBe('string');
         expect(generatedMsg).toMatchObject({ from, url });
     });
 });
