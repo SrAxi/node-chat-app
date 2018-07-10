@@ -149,7 +149,6 @@
                 }
 
                 socket.emit('createMessage', {
-                    from: this.params.username,
                     text: this.currentMessage
                 }, (data) => {
                     console.log('Message sent', data);
