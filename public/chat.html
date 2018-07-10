@@ -22,6 +22,9 @@
 	<aside class="col-2 bg-dark fixed-top shadow text-white sidebar">
 		<div class="sidebar-sticky">
 			<h3 class="text-center mt-4">Users</h3>
+			<ul style="list-style: none">
+				<li v-for="user in roomUsers">{{ user }}</li>
+			</ul>
 		</div>
 	</aside>
 	<main class="col-10">
@@ -101,14 +104,21 @@
         console.log('Disconnected from server');
     });
 
+    socket.on('updateUserList', (users) => {
+        console.log('Users list', users);
+        app.roomUsers = users;
+    });
+
     socket.on('newMessage', (message) => {
         console.log('newMessage', message);
         app.messages.push(message);
+        app.scrollToBottom();
     });
 
     socket.on('createLocationMessage', (location) => {
         console.log('createLocationMessage', location);
         app.messages.push(location);
+        app.scrollToBottom();
     });
 
     const router = new VueRouter({
@@ -121,6 +131,7 @@
         el: '#app',
         data: {
             messages: [],
+            roomUsers: [],
             currentMessage: '',
             params: {
                 username: '',
@@ -154,7 +165,6 @@
                 }
 
                 navigator.geolocation.getCurrentPosition((position) => {
-                    console.log('location')
                     socket.emit('createLocationMessage', {
                         latitude: position.coords.latitude,
                         longitude: position.coords.longitude
@@ -163,6 +173,10 @@
                     alert('Unable to fetch location');
                     console.error(error);
                 });
+            },
+            scrollToBottom() {
+                const container = this.$el.querySelector('div.message-container');
+                container.scrollTop = container.scrollHeight;
             }
         }
     });

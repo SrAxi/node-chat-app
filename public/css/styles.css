@@ -10,12 +10,12 @@
 .message-container {
     height: 40rem;
     position: relative;
-    overflow-y: hidden;
+    overflow-y: scroll;
 }
 
 .message-container ul {
     list-style: none;
-    position: absolute;
+    /*position: absolute;*/
     bottom: 0;
     word-break: break-all;
 }
